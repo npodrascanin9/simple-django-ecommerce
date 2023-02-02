@@ -1,0 +1,71 @@
+{% extends "onlineshop/base.html" %}
+
+{% block title %}
+  Checkout
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-5">
+      <form action="." method="post" class="order-form">
+        <div class="card">
+          <div class="card-header">
+            <h5>Place order</h5>
+          </div>
+
+          <div class="card-body">
+              {{ form.as_p }}
+          </div>
+
+          <div class="card-footer">
+            <p><input type="submit" value="Submit"></p>
+            {% csrf_token %}
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-7">
+      <div class="card">
+        <div class="card-header">
+          <h5>Invoice</h5>
+        </div>
+
+        <div class="card-body">
+          <table class="table">
+              <tr>
+                <th>Drone</th>
+                <th>Quantity</th>
+                <th>Total price</th>
+            </thead>
+
+            <tbody>
+              {% for item in cart %}
+              <tr>
+                <td>
+                  {{ item.product.name }}
+                </td>
+                <td>
+                  {{ item.quantity }}
+                </td>
+                <td>
+                  {{ item.total_price }} RSD
+                </td>
+              </tr>
+              {% endfor %}
+
+              <tr>
+                <td colspan="2"></td>
+                <td>
+                  {{ cart.get_total_price }} RSD
+                </td>
+              </tr>
+            </tbody> 
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

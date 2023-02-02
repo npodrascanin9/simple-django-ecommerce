@@ -1,0 +1,83 @@
+{% extends "onlineshop/base.html" %}
+{% load static %}
+
+
+{% block title %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Drones
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-between">
+        <div id="sidebar" class="col-3">
+            <h2>Categories</h2>
+
+            <ul>
+                <li {% if not category %} class="selected" {% endif %}>
+                    <a href="{% url "onlineshop:product_list" %}">
+                        All
+                    </a>
+                </li>
+        
+                {% for c in categories %}
+                <li {% if category.slug == c.slug %} class="selected" {% endif %}>
+                    <a href="{{ c.get_absolute_url }}">
+                        {{ c.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <div class="col-10">
+            <div class="my-products mt-5">
+                {% comment %} <h1 class="text-center">
+                    {% if category %}
+                        {{ category.name }}
+                    {% else %}
+                        Drones
+                    {% endif %}
+                </h1> {% endcomment %}
+        
+                <div class="container-fluid">
+                    <div class="row">
+                        {% for product in products %}
+                        <div class="col-3">
+                            <div class="card">
+                                <img src="
+                                    {% if product.image %}
+                                        {{ product.image.url }}
+                                    {% else %}
+                                        {% static "img/no_img.png" %}
+                                    {% endif %}
+                                " class="card-img-top img-dimensions" style="border-bottom: 1px solid rgba(0, 0, 0, 0.125);">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ product.name }}
+                                    </h5>
+                                    <p class="card-text">
+                                        {{ product.price }} RSD
+                                    </p>
+                                </div>
+        
+                                <div class="card-footer">
+                                    <a href="{{ product.get_absolute_url }}" class="btn btn-secondary">
+                                        Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

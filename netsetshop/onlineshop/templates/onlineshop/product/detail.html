@@ -1,0 +1,109 @@
+{% extends "onlineshop/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <img src="
+                    {% if product.image %}
+                        {{ product.image.url }}
+                    {% else %}
+                        {% static "img/no_img.png" %}
+                    {% endif %}
+                " class="card-img-top" style="border-bottom: 1px solid rgba(0, 0, 0, 0.125);">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {{ product.name }}
+                    </h4>
+                    <h5 class="card-subtitle mb-2 text-muted">
+                        {{ product.category }}
+                    </h5>
+                    <h6 class="card-title">
+                        {% if product.hasCamera %}
+                            With Camera
+                        {% else %}
+                            No Camera
+                        {% endif %}
+                    </h6>
+                    <p class="card-text">
+                        {{ product.price }} RSD
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    Description
+                </div>
+
+                <div class="card-body">
+                    <p class="text-secondary">
+                        {{ product.description|linebreaks }}
+                    </p>
+                </div>  
+            </div>
+        </div>
+
+        <div class="col-3">
+            <form action="{% url "cart:cart_add" product.id %}" method="post">
+                <div class="card">
+                    <div class="card-header">
+                        Add to Card
+                    </div>
+
+                    <div class="card-body">
+                        {{ cart_product_form }}
+                    </div>
+
+                    <div class="card-footer">                        
+                        {% csrf_token %}
+                        <input type="submit" value="Add to cart">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% comment %} 
+<div class="product-detail">
+    <img src="
+        {% if product.image %}
+            {{ product.image.url }}
+        {% else %}
+            {% static "img/no_img.png" %}
+        {% endif %}
+    ">
+
+    <h1>{{ product.name }}</h1>
+
+    <h2>
+        <a href="{{ product.category.get_absolute_url }}">
+            {{ product.category }}
+        </a>
+    </h2>
+
+    <p class="price">Rs{{ product.price }}</p>
+
+    <p>
+        Has Camera: {% if product.hasCamera %} yes {% else %} no {% endif %}
+    </p>
+
+    <form action="{% url "cart:cart_add" product.id %}" method="post">
+        {{ cart_product_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to cart">
+    </form>
+
+    {{ product.description|linebreaks }}
+</div> {% endcomment %}
+{% endblock %}

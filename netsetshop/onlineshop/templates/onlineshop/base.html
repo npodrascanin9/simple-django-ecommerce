@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %} My Drone Shop {% endblock %}</title>
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap5.css" %}" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="/">My Drone Shop</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <div class="cart">
+                    {% with total_items=cart|length %}
+                    {% if total_items > 0 %}
+                    Your Cart:
+                    <a href="{% url "cart:cart_detail" %}">
+                        {{ total_items }} item{{ total_items|pluralize }}
+        
+                        {{ cart.get_total_price }} RSD
+                    </a>
+                    {% else %}
+                    Your Cart is Empty
+                    {% endif %}
+                    {% endwith %}
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div id="content" class="mt-5">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

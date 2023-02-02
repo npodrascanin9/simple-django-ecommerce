@@ -1,0 +1,24 @@
+{% extends "onlineshop/base.html" %}
+
+{% block title %}
+  Thank you
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-5">
+      <div class="card">
+        <h5 class="card-header">Thank You</h5>
+        <div class="card-body">
+          <h5 class="card-title">Order successfully completed.</h5>
+          <p class="card-text">Generated order Id is <strong>{{ order.id }}</strong>.</p>
+          <a href="/" class="btn btn-secondary">
+            Go Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
